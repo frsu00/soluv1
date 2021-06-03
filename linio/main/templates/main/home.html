@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <hr>
+    {% if busqueda %}
+        <p>Mostrando resultados para "<span class="filter-busqueda">{{ query }}</span>"</p>
+    {% endif %}
+
+
+    <h5> Ultimos productos </h5>
+    <ul>
+      {% for producto in latest_products %}
+        <li>
+          <a href="{% url 'product-detail' producto.pk %}">
+            {{ producto.nombre }}
+          </a>
+          - {{ producto.precio }}
+        </li>
+      {% empty %}
+        <li>Aun no hay productos disponibles.</li>
+      {% endfor %}
+    </ul>
+    <hr>
+    <ul>
+      <li><a href="{% url 'product-list' %}">Ver Lista de Productos Completa</a></li>
+    </ul>
+{% endblock %}

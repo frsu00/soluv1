@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+ <h1> LinioExp </h1>
+    <hr>
+    <h3> Productos </h3>
+    <div class="product">
+      {% for producto in object_list %}
+        <div class="product-item mx-2 mt-5">
+            <a class="product-item-link" href="{% url 'product-detail' producto.pk %}">
+            <div class="product-item-img">
+                <img src="" alt="">
+            </div>
+                <div class="mx-2">
+                    <div class="d-table">
+                        <h5 class="product-item-name-sub">{{ producto.nombre }}</h5>
+                    </div>
+                    <h6>S/ {{ producto.precio }}</h6>
+                </div>
+            </a>
+        </div>
+      {% empty %}
+        <li>Aun no hay productos disponibles.</li>
+      {% endfor %}
+    </div>
+    <hr>
+{% endblock %}
