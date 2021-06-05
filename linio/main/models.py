@@ -7,16 +7,26 @@ class Proveedor(models.Model):
     razon_social = models.CharField(max_length=20)
     telefono = models.CharField(max_length=9)
 
+    def __str__(self):
+        return self.razon_social
 
 class Categoria(models.Model):
     codigo = models.CharField(max_length=4)
     nombre = models.CharField(max_length=50)
 
+    def cantidad_productos(self):
+        return Producto.objects.filter(categoria=self.id).count()
+
+    def __str__(self):
+        return self.nombre
 
 class Localizacion(models.Model):
-  distrito = models.CharField(max_length=20)
-  provincia = models.CharField(max_length=20)
-  departamento = models.CharField(max_length=20)
+    distrito = models.CharField(max_length=20)
+    provincia = models.CharField(max_length=20)
+    departamento = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.distrito
 
 
 class Producto(models.Model):
@@ -39,6 +49,9 @@ class Producto(models.Model):
         codigo_producto = str(self.id).zfill(6)
 
         return f'{codigo_categoria}-{codigo_producto}'
+
+    def __str__(self):
+        return self.nombre
 
 
 class Pedido(models.Model):

@@ -13,7 +13,7 @@ from .models import *
 
 def home(request):
     query = request.GET.get("buscar")
-    latest_products = Producto.objects.all()
+    latest_products = Producto.objects.all().order_by('-nombre')[:5]
     busqueda = False
     if query:
         busqueda = True,
@@ -33,7 +33,11 @@ def home(request):
 
 class ProductListView(ListView):
     model = Producto
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categorias'] = Categoria.objects.all()
 
+        return context
 
 class ProductDetailView(DetailView):
     model = Producto
