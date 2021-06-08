@@ -34,12 +34,12 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
+        <h5 class="mt-5"> Ultimos productos </h5>
     {% endif %}
 
-    <h5 class="mt-5"> Ultimos productos </h5>
     <div class="product">
       {% for producto in latest_products %}
-        <div class="product-item mx-2 mt-5">
+        <div class="product-item mx-2 mt-5" style="border: solid 1px #eee;">
             <a class="product-item-link" href="{% url 'product-detail' producto.pk %}">
             <div class="product-item-img">
                 <img src="" alt="">
@@ -48,12 +48,12 @@
                     <div class="d-table">
                         <h5 class="product-item-name-sub">{{ producto.nombre }}</h5>
                     </div>
-                    <h6>S/ {{ producto.precio }}</h6>
+                    <h6>S/ {{ producto.precio|stringformat:".2f" }}</h6>
                 </div>
             </a>
         </div>
       {% empty %}
-        <li>Aun no hay productos disponibles.</li>
+        <h4>Aun no hay productos disponibles.</h4>
       {% endfor %}
     </div>
 

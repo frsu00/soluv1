@@ -24,7 +24,7 @@
                             <div class="d-table">
                                 <h5 class="product-item-name-sub">{{ producto.nombre }}</h5>
                             </div>
-                            <h6>S/ {{ producto.precio }}</h6>
+                            <h6>S/ {{ producto.precio|floatformat:"2g" }}</h6>
                         </div>
                     </a>
                 </div>
