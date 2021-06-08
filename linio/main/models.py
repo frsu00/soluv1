@@ -35,13 +35,14 @@ class Producto(models.Model):
     proveedor = models.ForeignKey('Proveedor', on_delete=models.SET_NULL, null=True)
 
     # Atributos
+    fecha_Creacion = models.DateField(auto_now=True, blank=True, null=True)
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField()
     precio = models.FloatField()
     estado = models.CharField(max_length=3)
     descuento = models.FloatField(default=0)
 
-    def precio_final(self):
+    def get_precio_final(self):
         return self.precio * (1 - self.descuento)
 
     def sku(self):
@@ -61,11 +62,11 @@ class Pedido(models.Model):
     cliente = models.ForeignKey('Cliente', on_delete=models.SET_NULL, null=True)
 
     # Atributos
-    fechaCreacion = models.DateField()
+    fechaCreacion = models.DateField(auto_now=True, blank=True, null=True)
     estado = models.CharField(max_length=3)
-    fechaEntrega = models.DateField()
-    direccionEntrega = models.CharField(max_length=50)
-    tarifa = models.FloatField(default=0)
+    fechaEntrega = models.DateField(null=True)
+    direccionEntrega = models.CharField(max_length=100, blank=True, null=True)
+    tarifa = models.FloatField(default=0, blank=True, null=True)
 
     def __str__(self):
         return f'{self.cliente} - {self.fecha_creacion} - {self.estado}'
@@ -85,8 +86,8 @@ class DetallePedido(models.Model):
     producto = models.ForeignKey('Producto', on_delete=models.SET_NULL, null=True)
 
     # Atributos
-    cantidad = models.IntegerField()
-    subtotal = models.FloatField()
+    cantidad = models.IntegerField(null=True)
+    subtotal = models.FloatField(null=True)
 
     def __str__(self):
         return f'{self.pedido.id} - {self.cantidad} x {self.producto.nombre}'
