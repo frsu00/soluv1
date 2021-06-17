@@ -48,7 +48,15 @@
                     <div class="d-table">
                         <h5 class="product-item-name-sub">{{ producto.nombre }}</h5>
                     </div>
-                    <h6>S/ {{ producto.precio|stringformat:".2f" }}</h6>
+                    {% if producto.has_discount %}
+                        <span class="d-flex">
+                            <h6 class="first mr-2">S/ {{ producto.precio|floatformat:"2g" }} </h6>
+                            <h6 class="first-discount"> - {{ producto.get_discount|floatformat:"0" }}%</h6>
+                        </span>
+                        <h6 class="final">S/ {{ producto.get_precio_final|floatformat:"2g" }}</h6>
+                    {% else %}
+                        <h6 class="final">S/ {{ producto.precio|floatformat:"2g" }}</h6>
+                    {% endif %}
                 </div>
             </a>
         </div>

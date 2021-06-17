@@ -2,29 +2,77 @@
 {% load static %}
 
 {% block content %}
- <h1> LinioExp </h1>
+{% if busqueda %}
+{% endif %}
+
+    <h1 style="font-size: 40px">Todos los productos disponibles</h1>
     <hr>
-    <h3> Productos </h3>
     <div class="container-fluid">
-        <div class="row mt-5">
-            <div class="col-2">
-                <h4 class="mb-4">Categorías</h4>
-                {% for categoria in categorias %}
-                <p>({{ categoria.cantidad_productos }}) {{ categoria.nombre }}</p>
-                {% endfor %}
+        <div class="filter-navbar d-none d-sm-block">
+                <!-- Example single danger button -->
+            <div class="btn-group mt-3 mx-5">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Precio
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="?order=maxim">Mayor</a>
+                    <a class="dropdown-item" href="?order=minim">Menor</a>
+                </div>
             </div>
-            <div class="col-10 product">
-              {% for producto in object_list %}
+            <div class="btn-group mt-3 mx-5">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ordenar por
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="?nombre=asc">Ascendente</a>
+                    <a class="dropdown-item" href="?nombre=dsc">Descendente</a>
+                </div>
+            </div>
+            <div class="btn-group mt-3 mx-5">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Proveedores
+                </button>
+                <div class="dropdown-menu">
+                    {% for proveedor in proveedores %}
+                    <a class="dropdown-item" href="?proveedor={{proveedor.pk}}">{{proveedor.razon_social}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="btn-group mt-3 mx-5">
+                <a class="categoria-font" href="{% url 'product-list' %}">Borrar filtro</a>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-2">
+                <div>
+                    <h4 class="mb-4">Categorías</h4>
+                    {% for categoria in categorias %}
+                    <a class="categoria-font" href="?categoria={{categoria.pk}}"><p class="mb-2">({{ categoria.cantidad_productos }}) {{ categoria.nombre }}</p></a>
+                    {% endfor %}
+                    <a class="categoria-font" href="{% url 'product-list' %}">Borrar filtro</a>
+                </div>
+            </div>
+            <div class="col-sm-10 product">
+              {% for producto in productos %}
                 <div class="product-item mx-1 mb-3">
                     <a class="product-item-link" href="{% url 'product-detail' producto.pk %}">
                     <div class="product-item-img">
-                        <img src="" alt="">
+                        <img class="product-item-img" src="{{ producto.images.first.image.url }}" alt="">
                     </div>
                         <div class="mx-2">
                             <div class="d-table">
                                 <h5 class="product-item-name-sub">{{ producto.nombre }}</h5>
                             </div>
-                            <h6>S/ {{ producto.precio|floatformat:"2g" }}</h6>
+                            {% if producto.has_discount %}
+                                <span class="d-flex">
+                                    <h6 class="first mr-2">S/ {{ producto.precio|floatformat:"2g" }} </h6>
+                                    <h6 class="first-discount"> - {{ producto.get_discount|floatformat:"0" }}%</h6>
+                                </span>
+                                <h6 class="final">S/ {{ producto.get_precio_final|floatformat:"2g" }}</h6>
+                            {% else %}
+                                <h6 class="final">S/ {{ producto.precio|floatformat:"2g" }}</h6>
+                            {% endif %}
                         </div>
                     </a>
                 </div>

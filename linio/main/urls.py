@@ -1,11 +1,13 @@
 from django.urls import path
 
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     #path('', views.HomePageView.as_view(), name='home'),
     path('', views.home, name='home'),
-    path('productos', views.ProductListView.as_view(), name='product-list'),
+    path('productos', views.ProductListView, name='product-list'),
     path('productos/<int:pk>', views.ProductDetailView.as_view(), name='product-detail'),
     path('registro/', views.RegistrationView.as_view(), name='register'),
     path('add_to_cart/<int:product_pk>', views.AddToCartView.as_view(), name='add-to-cart'),
@@ -14,4 +16,4 @@ urlpatterns = [
     path('checkout/<int:pk>', views.PedidoUpdateView.as_view(), name='pedido-update'),
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('complete_payment/', views.CompletePaymentView.as_view(), name='complete-payment'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

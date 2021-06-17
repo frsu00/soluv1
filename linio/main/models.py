@@ -45,11 +45,19 @@ class Producto(models.Model):
     def get_precio_final(self):
         return self.precio * (1 - self.descuento)
 
+    def get_discount(self):
+        return self.descuento * 100
+
+    def has_discount(self):
+        if self.descuento != 0:
+            return True
+
     def sku(self):
         codigo_categoria = self.categoria.codigo.zfill(4)
         codigo_producto = str(self.id).zfill(6)
 
         return f'{codigo_categoria}-{codigo_producto}'
+
 
     def __str__(self):
         return self.nombre
@@ -143,4 +151,4 @@ class Colaborador(models.Model):
 
 class ProductoImage(models.Model):
     product = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to="products", null=True, blank=True)
+    image = models.ImageField(upload_to="media/products", null=True, blank=True)

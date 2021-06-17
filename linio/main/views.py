@@ -16,7 +16,7 @@ from .models import *
 
 
 def home(request):
-    query = request.GET.get("buscar")
+    query = request.GET.get("q")
     latest_products = Producto.objects.all().order_by('-nombre')[:5]
     busqueda = False
     if query:
@@ -35,8 +35,9 @@ def home(request):
     return render(request, "main/home.html", context)
 
 
-class ProductListView(ListView):
+'''class ProductListView(ListView):
     model = Producto
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categorias'] = Categoria.objects.all()
@@ -49,21 +50,57 @@ class ProductListView(ListView):
             object_list = Producto.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
             return object_list
         else:
-            return Producto.objects.all()
+            return Producto.objects.all()'''
+
+
+def ProductListView(request):
+    proveedores = Proveedor.objects.all()
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    categoria_id = request.GET.get('categoria')
+    order = request.GET.get('order')
+    nombre = request.GET.get('nombre')
+    proveedor_id = request.GET.get('proveedor')
+    busqueda = False
+
+    if categoria_id != None:
+        busqueda = True,
+        productos = Producto.objects.filter(Q(categoria=categoria_id))
+    if proveedor_id != None:
+        busqueda = True,
+        productos = Producto.objects.filter(Q(proveedor=proveedor_id))
+    if order == 'maxim':
+        busqueda = True,
+        productos = Producto.objects.order_by('-precio')
+    if order == 'minim':
+        busqueda = True,
+        productos = Producto.objects.order_by('precio')
+    if nombre == 'asc':
+        busqueda = True,
+        productos = Producto.objects.order_by('nombre')
+    if nombre == 'dsc':
+        busqueda = True,
+        productos = Producto.objects.order_by('-nombre')
+
+    query = request.GET.get("q")
+    if query:
+        busqueda = True,
+        productos = Producto.objects.filter(
+            Q(nombre__icontains=query) |
+            Q(descripcion__icontains=query)
+        ).distinct()
+
+    context = {
+        'productos': productos,
+        'categorias': categorias,
+        'busqueda': busqueda,
+        'proveedores': proveedores
+    }
+    return render(request, "main/producto_list.html", context)
+
 
 class ProductDetailView(DetailView):
     model = Producto
-
-
-class HomePageView(TemplateView):
-
-    template_name = "main/home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['latest_products'] = Producto.objects.all()[:5]
-
-        return context
 
 
 class RegistrationView(FormView):
