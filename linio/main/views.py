@@ -43,6 +43,14 @@ class ProductListView(ListView):
 
         return context
 
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query is not None:
+            object_list = Producto.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
+            return object_list
+        else:
+            return Producto.objects.all()
+
 class ProductDetailView(DetailView):
     model = Producto
 

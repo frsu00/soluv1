@@ -37,7 +37,7 @@
                 </li>
                 <li class="nav-item active">
                     <form method="get">
-                        <input class="nav-search-input" placeholder="Buscar productos" type="text" name="buscar" id="buscar">
+                        <input class="nav-search-input" placeholder="Buscar productos" type="text" name="q" id="buscar">
                         <button class="nav-search-button" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                 </li>
@@ -47,7 +47,6 @@
                     <div class="d-flex">
                         <i class="far fa-user-circle"></i>
                         <p class="mx-4"><a href="{% url 'logout' %}">Cierra Sesion</a></p>
-
                     </div>
                 {% else %}
                     <a class="mx-4" href="{% url 'login' %}">Inicia Sesion</a>
@@ -58,7 +57,6 @@
         </div>
     </nav>
     <!--End NavBar-->
-
 
     <!--Begin SubNavBar-->
     <nav style="height: 32px; background-color: #f2f2f2;">

@@ -65,7 +65,7 @@ class Pedido(models.Model):
     fechaCreacion = models.DateField(auto_now=True, blank=True, null=True)
     estado = models.CharField(max_length=3)
     fechaEntrega = models.DateField(null=True)
-    direccionEntrega = models.CharField(max_length=100, blank=True, null=True)
+    direccion_entrega = models.CharField(max_length=100, blank=True, null=True)
     tarifa = models.FloatField(default=0, blank=True, null=True)
 
     def __str__(self):
@@ -141,3 +141,6 @@ class Colaborador(models.Model):
         return f'Colaborador: {self.user_profile.user.get_username()}'
 
 
+class ProductoImage(models.Model):
+    product = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to="products", null=True, blank=True)
