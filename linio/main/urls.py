@@ -17,7 +17,8 @@ urlpatterns = [
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('complete_payment/', views.CompletePaymentView.as_view(), name='complete-payment'),
 
-    path('addproduct/', views.createProduct, name='createProduct'),
-    path('editproduct/', views.editProduct, name='createProduct'),
-    path('allmyproducts/', views.seeProduct, name='createProduct'),
+    path('addproduct/', views.createProduct, name='addproduct'),
+    path('editproduct/<str:pk>', views.editProduct, name='editproduct'),
+    path('allmyproducts/', views.seeProduct, name='allmyproducts'),
+    path('deleteproduct/<str:pk>', views.deleteProduct, name='deleteproduct'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -52,20 +52,24 @@
 
                 <hr>
                 <div class="block">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-primary'>
-                          Añadir al carrito
-                        </a>
-                        <a href="{% url 'pedido-detail' %}" class='button'>
-                          Ver carrito
-                        </a>
+
+                    {% if user.profile.colaborador.is_colaborador %}
                     {% else %}
-                        <a href="{% url 'login' %}" class='button is-primary'>
-                          Añadir al carrito
-                        </a>
-                        <a href="{% url 'login' %}" class='button'>
-                          Ver carrito
-                        </a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-primary'>
+                              Añadir al carrito
+                            </a>
+                            <a href="{% url 'pedido-detail' %}" class='button'>
+                              Ver carrito
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class='button is-primary'>
+                              Añadir al carrito
+                            </a>
+                            <a href="{% url 'login' %}" class='button'>
+                              Ver carrito
+                            </a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

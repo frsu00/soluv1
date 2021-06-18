@@ -2,14 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Proveedor(models.Model):
-    ruc = models.CharField(max_length=11)
-    razon_social = models.CharField(max_length=20)
-    telefono = models.CharField(max_length=9)
-
-    def __str__(self):
-        return self.razon_social
-
 class Categoria(models.Model):
     codigo = models.CharField(max_length=4)
     nombre = models.CharField(max_length=50)
@@ -32,7 +24,7 @@ class Localizacion(models.Model):
 class Producto(models.Model):
     # Relaciones
     categoria = models.ForeignKey('Categoria', on_delete=models.SET_NULL, null=True)
-    proveedor = models.ForeignKey('Proveedor', on_delete=models.SET_NULL, null=True)
+    proveedor = models.ForeignKey('Colaborador', on_delete=models.SET_NULL, null=True)
 
     # Atributos
     fecha_creacion = models.DateField(auto_now=True, blank=True, null=True)
@@ -146,6 +138,11 @@ class Colaborador(models.Model):
     reputacion = models.FloatField()
     cobertura_entrega = models.ManyToManyField(to='Localizacion')
     is_colaborador = models.BooleanField(default=True)
+
+    # Atributos especificos del proveedor
+    ruc = models.CharField(max_length=11)
+    razon_social = models.CharField(max_length=20)
+    telefono = models.CharField(max_length=9)
 
     def __str__(self):
         return f'Colaborador: {self.user_profile.user.get_username()}'

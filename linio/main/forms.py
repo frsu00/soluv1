@@ -1,7 +1,8 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Localizacion, Categoria
+from .models import Localizacion, Categoria, Producto
 
 class UserForm(UserCreationForm):
     # django.contrib.auth.User attributes
@@ -49,3 +50,12 @@ class UserForm(UserCreationForm):
                   'reputacion',
                   'cobertura_entrega',
                   ]
+
+
+class ProductoForm(ModelForm):
+    class Meta:
+        model = Producto
+        fields = '__all__'
+        widgets = {
+            'proveedor': forms.HiddenInput()
+        }

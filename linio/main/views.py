@@ -36,7 +36,7 @@ def home(request):
 
 
 def ProductListView(request):
-    proveedores = Proveedor.objects.all()
+    proveedores = Colaborador.objects.all()
     categorias = Categoria.objects.all()
     productos = Producto.objects.all()
     categoria_id = request.GET.get('categoria')
@@ -259,22 +259,51 @@ class CompletePaymentView(View):
         return redirect('home')
 
 
-def createProduct(request):
-    context = {
+def seeProduct(request):
+    proveedor_id = request.user.profile.colaborador.id
+    misproductos = Producto.objects.filter(proveedor=proveedor_id)
 
+    context = {
+        'misproductos': misproductos
+    }
+    return render(request,"main/mis_productos.html", context)
+
+
+def createProduct(request):
+    proveedor_id = request.user.profile.colaborador.id
+    proveedor = Colaborador.objects.get(id=proveedor_id)
+    initial_data = {
+        'proveedor': proveedor,
+    }
+    form = ProductoForm(request.POST or None, initial=initial_data)
+    if form.is_valid():
+        form.save()
+
+    context = {
+        'form': form
     }
     return render(request,"main/crear_producto.html", context)
 
 
-def editProduct(request):
+def editProduct(request, pk):
+    producto = Producto.objects.get(id=pk)
+    form = ProductoForm(instance=producto)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
     context = {
-
+        'form': form
     }
-    return render(request,"main/editar_producto.html", context)
+    return render(request, "main/editar_producto.html", context)
 
 
-def seeProduct(request):
+def deleteProduct(request, pk):
+    producto = Producto.objects.get(id=pk)
+    if request.method == 'POST':
+        producto.delete()
+        return redirect('allmyproducts')
     context = {
-
+        'producto': producto
     }
-    return render(request,"main/mis_productos.html", context)
+    return render(request, "main/borrar_producto.html", context)

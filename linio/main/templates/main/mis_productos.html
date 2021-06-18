@@ -3,5 +3,34 @@
 
 {% block content %}
 
+<div class="product">
+{% for producto in misproductos %}
+
+    <div class="product-item mx-1 mb-3">
+        <div class="product-item-img">
+            <img class="product-item-img" src="{{ producto.images.first.image.url }}" alt="">
+        </div>
+        <div class="mx-2">
+            <div class="d-table">
+                <h5 class="product-item-name-sub">{{ producto.nombre }}</h5>
+            </div>
+            {% if producto.has_discount %}
+                <span class="d-flex">
+                    <h6 class="first mr-2">S/ {{ producto.precio|floatformat:"2g" }} </h6>
+                    <h6 class="first-discount"> - {{ producto.get_discount|floatformat:"0" }}%</h6>
+                </span>
+                <h6 class="final">S/ {{ producto.get_precio_final|floatformat:"2g" }}</h6>
+            {% else %}
+                <h6 class="final">S/ {{ producto.precio|floatformat:"2g" }}</h6>
+            {% endif %}
+        </div>
+
+        <a class="product-item-link" href="{% url 'editproduct' producto.pk %}">Editar</a>
+
+        <a class="product-item-link" href="{% url 'deleteproduct' producto.pk %}">Borrar</a>
+    </div>
+
+{% endfor %}
+</div>
 
 {% endblock %}
