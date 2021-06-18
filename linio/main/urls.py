@@ -16,4 +16,8 @@ urlpatterns = [
     path('checkout/<int:pk>', views.PedidoUpdateView.as_view(), name='pedido-update'),
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('complete_payment/', views.CompletePaymentView.as_view(), name='complete-payment'),
+
+    path('addproduct/', views.createProduct, name='createProduct'),
+    path('editproduct/', views.editProduct, name='createProduct'),
+    path('allmyproducts/', views.seeProduct, name='createProduct'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

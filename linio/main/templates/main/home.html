@@ -38,7 +38,7 @@
     {% endif %}
 
     <div class="product">
-      {% for producto in latest_products %}
+        {% for producto in latest_products %}
         <div class="product-item mx-2 mt-5" style="border: solid 1px #eee;">
             <a class="product-item-link" href="{% url 'product-detail' producto.pk %}">
             <div class="product-item-img">
@@ -60,9 +60,9 @@
                 </div>
             </a>
         </div>
-      {% empty %}
+        {% empty %}
         <h4>Aun no hay productos disponibles.</h4>
-      {% endfor %}
+        {% endfor %}
     </div>
 
     <hr>

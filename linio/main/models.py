@@ -35,7 +35,7 @@ class Producto(models.Model):
     proveedor = models.ForeignKey('Proveedor', on_delete=models.SET_NULL, null=True)
 
     # Atributos
-    fecha_Creacion = models.DateField(auto_now=True, blank=True, null=True)
+    fecha_creacion = models.DateField(auto_now=True, blank=True, null=True)
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField()
     precio = models.FloatField()
@@ -70,7 +70,7 @@ class Pedido(models.Model):
     cliente = models.ForeignKey('Cliente', on_delete=models.SET_NULL, null=True)
 
     # Atributos
-    fechaCreacion = models.DateField(auto_now=True, blank=True, null=True)
+    fecha_creacion = models.DateField(auto_now=True, blank=True, null=True)
     estado = models.CharField(max_length=3)
     fechaEntrega = models.DateField(null=True)
     direccion_entrega = models.CharField(max_length=100, blank=True, null=True)

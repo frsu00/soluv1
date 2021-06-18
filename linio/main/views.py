@@ -35,24 +35,6 @@ def home(request):
     return render(request, "main/home.html", context)
 
 
-'''class ProductListView(ListView):
-    model = Producto
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categorias'] = Categoria.objects.all()
-
-        return context
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query is not None:
-            object_list = Producto.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
-            return object_list
-        else:
-            return Producto.objects.all()'''
-
-
 def ProductListView(request):
     proveedores = Proveedor.objects.all()
     categorias = Categoria.objects.all()
@@ -275,3 +257,24 @@ class CompletePaymentView(View):
         pedido.save()
         messages.success(request, 'Gracias por tu compra! Un repartidor ha sido asignado a tu pedido.')
         return redirect('home')
+
+
+def createProduct(request):
+    context = {
+
+    }
+    return render(request,"main/crear_producto.html", context)
+
+
+def editProduct(request):
+    context = {
+
+    }
+    return render(request,"main/editar_producto.html", context)
+
+
+def seeProduct(request):
+    context = {
+
+    }
+    return render(request,"main/mis_productos.html", context)
