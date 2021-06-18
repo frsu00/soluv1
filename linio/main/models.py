@@ -132,6 +132,7 @@ class Cliente(models.Model):
 
     # Atributos especificos del Cliente
     preferencias = models.ManyToManyField(to='Categoria')
+    is_colaborador = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Cliente: {self.user_profile.user.get_username()}'
@@ -144,6 +145,7 @@ class Colaborador(models.Model):
     # Atributos especificos del Colaborador
     reputacion = models.FloatField()
     cobertura_entrega = models.ManyToManyField(to='Localizacion')
+    is_colaborador = models.BooleanField(default=True)
 
     def __str__(self):
         return f'Colaborador: {self.user_profile.user.get_username()}'

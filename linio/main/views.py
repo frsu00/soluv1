@@ -144,18 +144,18 @@ class RegistrationView(FormView):
 
             cliente.save()
 
-            # Create Colaborador if needed
-            is_colaborador = form.cleaned_data['is_colaborador']
-            if is_colaborador:
-                reputacion = form.cleaned_data['reputacion']
-                colaborador = Colaborador.objects.create(user_profile=user_profile, reputacion=reputacion)
+        # Create Colaborador if needed
+        is_colaborador = form.cleaned_data['is_colaborador']
+        if is_colaborador:
+            reputacion = form.cleaned_data['reputacion']
+            colaborador = Colaborador.objects.create(user_profile=user_profile, reputacion=reputacion)
 
-                # Handle special attribute
-                cobertura_entrega = form.cleaned_data['cobertura_entrega']
-                cobertura_entrega_set = Localizacion.objects.filter(pk=cobertura_entrega.pk)
-                colaborador.cobertura_entrega.set(cobertura_entrega_set)
+            # Handle special attribute
+            cobertura_entrega = form.cleaned_data['cobertura_entrega']
+            cobertura_entrega_set = Localizacion.objects.filter(pk=cobertura_entrega.pk)
+            colaborador.cobertura_entrega.set(cobertura_entrega_set)
 
-                colaborador.save()
+            colaborador.save()
 
             # Login the user
             login(self.request, user)

@@ -44,9 +44,15 @@
                 <div class="navbar-nav ml-auto">
 
                 {% if user.is_authenticated %}
+                    {% if user.profile.colaborador.is_colaborador %}
                     <div class="d-flex">
                         <i class="far fa-user-circle"></i>
-                        <p class="mx-4"><a href="{% url 'logout' %}">Cierra Sesion</a></p>
+                        <p class="mx-4"><a href="{% url 'logout' %}">Añadir producto</a></p>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex">
+                        <i class="far fa-user-circle"></i>
+                        <p class="mx-4"><a href="{% url 'logout' %}">Cerrar sesión</a></p>
                     </div>
                 {% else %}
                     <a class="mx-4" href="{% url 'login' %}">Inicia Sesion</a>
